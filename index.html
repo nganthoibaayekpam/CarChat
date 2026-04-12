@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know Your Car | AI Expert</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar-glassy">
+            <h1 class="know-your-car-title">Know Your Car</h1>
+            <button class="new-chat-btn">New Search +</button>
+            <div id="recent-chats" class="recent-chats-list">
+                </div>
+        </aside>
+
+        <main class="main-panel-glassy">
+            <header class="main-header">
+                <h2>Welcome</h2>
+                <span class="user-id-icon">A</span>
+            </header>
+            
+            <div class="greeting-container">
+                <h3 class="big-greeting">How can I help you today?</h3>
+                <div class="suggestion-cards">
+                    <button class="suggestion-card" onclick="setInput('Find classic specs for 1969 Mustang Fastback')">
+                        <span class="card-icon">🚗</span>
+                        <span class="card-title">Classic Car Specs</span>
+                        <span class="card-sub">Find 1969 Mustang history</span>
+                    </button>
+                    <button class="suggestion-card" onclick="setInput('Compare 2024 Tesla Model S & Model 3')">
+                        <span class="card-icon">⚡</span>
+                        <span class="card-title">Compare EV Models</span>
+                        <span class="card-sub">Tesla Model S vs. Model 3</span>
+                    </button>
+                    <button class="suggestion-card" onclick="setInput('Get VIN history for a 2018 Toyota Camry')">
+                        <span class="card-icon">🔍</span>
+                        <span class="card-title">Check VIN History</span>
+                        <span class="card-sub">Details on a 2018 Camry</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="chat-box" class="chat-messages">
+                </div>
+
+            <footer class="input-area-glassy">
+                <input type="text" id="user-input" placeholder="e.g., search classic car specs..." value="">
+                <button onclick="sendMessage()" class="send-btn-icon" aria-label="Send Message">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </footer>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

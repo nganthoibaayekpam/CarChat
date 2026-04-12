@@ -1,0 +1,303 @@
+/* --- Core Reset & Font --- */
+:root {
+    --bg-main: #141416;
+    --bg-glass: rgba(255, 255, 255, 0.05);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --text-primary: #f5f5f7;
+    --accent: #00C853; /* Green ChatGPT accent */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top left, #1a1a1e, var(--bg-main));
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- Dashboard Grid & Glassy Effect --- */
+.dashboard-container {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    border: none;
+    overflow: hidden;
+}
+
+.sidebar-glassy,
+.main-panel-glassy {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    border-radius: 0;
+}
+
+/* --- Sidebar --- */
+.sidebar-glassy {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-right-width: 0.5px;
+    z-index: 10;
+}
+
+.know-your-car-title {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.new-chat-btn {
+    background: none;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.new-chat-btn:hover {
+    background: var(--accent);
+    color: white;
+}
+
+.recent-chats-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* --- Main Panel --- */
+.main-panel-glassy {
+    position: relative;
+    display: grid;
+    grid-template-rows: 60px 1fr 100px;
+    overflow: hidden;
+}
+
+.main-header {
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.user-id-icon {
+    width: 35px;
+    height: 35px;
+    background: #303F9F;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+/* Greeting & Suggestion Cards */
+.greeting-container {
+    padding: 60px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.big-greeting {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.suggestion-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 900px;
+}
+
+.suggestion-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+    padding: 20px;
+    border-radius: 15px;
+    width: 250px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.suggestion-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+.card-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.card-sub {
+    font-size: 13px;
+    color: #a1a1aa;
+}
+
+/* Chat Messages */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.message {
+    padding: 15px 20px;
+    border-radius: 12px;
+    max-width: 80%;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.user-msg {
+    align-self: flex-end;
+    background: none;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--accent);
+}
+
+.bot-msg {
+    align-self: flex-start;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    color: #e4e4e7;
+}
+
+/* Loader Animation */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    color: var(--accent);
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 200, 83, 0.2);
+    border-top: 3px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- Input Area --- */
+.input-area-glassy {
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid var(--border-glass);
+    position: relative;
+    z-index: 10;
+}
+
+#user-input {
+    flex: 1;
+    padding: 15px 20px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+    border-radius: 20px;
+    outline: none;
+    font-size: 15px;
+}
+
+.send-btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    margin-left: 10px;
+    display: flex;
+}
+
+.send-btn-icon svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s;
+}
+
+.send-btn-icon path {
+    stroke: var(--accent);
+}
+
+.send-btn-icon:hover svg {
+    transform: translateX(3px) translateY(-3px) scale(1.05);
+}
+
+/* --- Responsive Adjustments (Responsiveness) --- */
+@media (max-width: 900px) {
+    .dashboard-container {
+        grid-template-columns: 1fr; /* Hide sidebar by default on smaller screens */
+    }
+    .sidebar-glassy {
+        display: none;
+    }
+    .main-panel-glassy {
+        grid-template-rows: 60px 1fr 100px;
+    }
+    .big-greeting {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 600px) {
+    .suggestion-card {
+        width: 100%;
+    }
+    .chat-messages {
+        padding: 15px;
+    }
+    .input-area-glassy {
+        padding: 15px;
+    }
+}
