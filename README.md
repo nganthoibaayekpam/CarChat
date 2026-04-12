@@ -2,7 +2,13 @@
 
 A glassy, responsive web dashboard that acts as a technical automotive assistant. Users can ask natural language questions about classic and modern cars to instantly retrieve detailed specifications, engine layouts, and chassis configurations.
 
-**Live Demo:** [Insert your GitHub Pages Link Here]
+**Live Demo:** https://nganthoibaayekpam.github.io/CarChat/
+
+### Dashboard Preview
+![Desktop View]
+
+
+![Mobile View](Leave this exactly as GitHub generated it when you dragged and dropped)
 
 ## Features
 * **Interactive AI Chat:** Directly queries an isolated backend to retrieve exact technical data or generate fallback knowledge.
