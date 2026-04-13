@@ -5,10 +5,12 @@ A glassy, responsive web dashboard that acts as a technical automotive assistant
 **Live Demo:** https://nganthoibaayekpam.github.io/CarChat/
 
 ### Dashboard Preview
-![Desktop View]
 
+### Desktop View
+![CarChat Desktop](assets/desktop-view.png)
 
-![Mobile View](Leave this exactly as GitHub generated it when you dragged and dropped)
+### Mobile View
+![CarChat Mobile](assets/mobile-view.png)
 
 ## Features
 * **Interactive AI Chat:** Directly queries an isolated backend to retrieve exact technical data or generate fallback knowledge.
