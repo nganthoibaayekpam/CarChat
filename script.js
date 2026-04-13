@@ -1,74 +1,113 @@
-const chatBox = document.getElementById('chat-box');
-const userInput = document.getElementById('user-input');
+const BACKEND_URL = 'https://car-chat-backend-eta.vercel.app'; 
 
-// Ensure this still points to your live Vercel endpoint
-const BACKEND_URL = "https://car-chat-backend-eta.vercel.app/getCarInfo";
+const chatHistory = document.getElementById('chat-history');
+const userInputBox = document.getElementById('user-input');
+const welcomeScreen = document.getElementById('welcome-screen');
+const chatHeaderTitle = document.getElementById('chat-header-title');
+const recentChatsList = document.getElementById('recent-chats'); // Targets the sidebar
+
+// --- Functions ---
+
+function startNewChat() {
+    // 1. Save current chat to the sidebar if it exists
+    if (chatHistory.innerHTML.trim() !== '') {
+        const historyBtn = document.createElement('button');
+        historyBtn.className = 'new-chat-btn'; 
+        historyBtn.style.border = 'none';
+        historyBtn.style.borderBottom = '1px solid var(--border-glass)';
+        historyBtn.style.borderRadius = '0';
+        historyBtn.style.textAlign = 'left';
+        historyBtn.innerText = chatHeaderTitle.innerText;
+
+        // Store the exact state of the chat
+        const savedHTML = chatHistory.innerHTML;
+        const savedTitle = chatHeaderTitle.innerText;
+
+        // Restore chat when clicked
+        historyBtn.onclick = () => {
+            chatHistory.innerHTML = savedHTML;
+            chatHeaderTitle.innerText = savedTitle;
+            welcomeScreen.style.display = 'none';
+        };
+
+        recentChatsList.prepend(historyBtn);
+    }
+
+    // 2. Reset main screen
+    chatHistory.innerHTML = ''; 
+    welcomeScreen.style.display = 'flex'; 
+    chatHeaderTitle.innerText = 'Welcome'; 
+    userInputBox.value = '';
+}
+
+function setInput(text) {
+    userInputBox.value = text;
+    sendMessage();
+}
+
+function handleEnter(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+function updateHeaderTitle(text) {
+    welcomeScreen.style.display = 'none'; 
+    let newTitle = text.charAt(0).toUpperCase() + text.slice(1);
+    if (newTitle.length > 30) {
+        newTitle = newTitle.substring(0, 30) + '...';
+    }
+    chatHeaderTitle.innerText = newTitle;
+}
 
 async function sendMessage() {
-    const text = userInput.value.trim();
-    if (!text) return;
+    const message = userInputBox.value.trim();
+    if (!message) return;
 
-    // Show the user's message
-    appendMessage(text, 'user-msg');
-    userInput.value = '';
+    updateHeaderTitle(message);
+    appendMessage(message, 'user-msg');
+    userInputBox.value = '';
 
-    // Create the special "Searching" loader
-    const loadingId = 'loader-' + Date.now();
-    const loaderHTML = `
-        <div class="loader-container" id="${loadingId}">
-            <div class="spinner"></div>
-            <span>Searching...</span>
-        </div>
-    `;
-    
-    // Smooth transition: remove greeting, add message
-    const greeting = document.querySelector('.greeting-container');
-    if (greeting) greeting.style.display = 'none';
-    
-    chatBox.insertAdjacentHTML('beforeend', loaderHTML);
-    chatBox.scrollTop = chatBox.scrollHeight;
+    const loaderId = 'loader-' + Date.now();
+    appendLoader(loaderId);
 
     try {
-        const response = await fetch(`${BACKEND_URL}?message=${encodeURIComponent(text)}`);
+        const response = await fetch(`${BACKEND_URL}/getCarInfo?message=${encodeURIComponent(message)}`);
         const data = await response.json();
-        
-        document.getElementById(loadingId).remove();
-        
+
+        removeLoader(loaderId);
+
         if (data.reply) {
             appendMessage(data.reply, 'bot-msg');
         } else {
-            appendMessage("Error: " + data.error, 'bot-msg');
+            appendMessage("Error: Could not retrieve data.", 'bot-msg');
         }
     } catch (error) {
-        document.getElementById(loadingId).remove();
-        appendMessage("Connection error to Vercel.", 'bot-msg');
+        console.error('Error fetching data:', error);
+        removeLoader(loaderId);
+        appendMessage("System error. Please try again later.", 'bot-msg');
     }
 }
 
 function appendMessage(text, className) {
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('message', className);
-    msgDiv.textContent = text;
-    
-    // Assign a unique ID so we can target and remove temporary loading messages
-    const id = 'msg-' + Date.now();
-    msgDiv.id = id;
-    
-    chatBox.appendChild(msgDiv);
-    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
-    
-    return id;
+    msgDiv.innerText = text;
+    chatHistory.appendChild(msgDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight; 
 }
 
-// Dynamics for suggestion cards
-function setInput(text) {
-    userInput.value = text;
-    userInput.focus();
+function appendLoader(id) {
+    const loaderDiv = document.createElement('div');
+    loaderDiv.classList.add('spinner');
+    loaderDiv.id = id;
+    chatHistory.appendChild(loaderDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
 }
 
-// Allow sending by pressing the Return/Enter key
-userInput.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        sendMessage();
+function removeLoader(id) {
+    const loader = document.getElementById(id);
+    if (loader) {
+        loader.remove();
     }
-});
+}
