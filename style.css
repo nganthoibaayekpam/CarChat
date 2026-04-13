@@ -20,14 +20,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh; /* Fallback */
+    height: 100dvh; /* Mobile Safari fix */
     overflow: hidden;
 }
 
 /* --- Dashboard Grid & Glassy Effect --- */
 .dashboard-container {
     width: 100vw;
-    height: 100vh;
+    height: 100vh; /* Fallback */
+    height: 100dvh; /* Mobile Safari fix */
     display: grid;
     grid-template-columns: 280px 1fr;
     border: none;
@@ -248,7 +250,7 @@ body {
     color: var(--text-primary);
     border-radius: 20px;
     outline: none;
-    font-size: 15px;
+    font-size: 16px; /* <-- Change this to 16px */
 }
 
 .send-btn-icon {
